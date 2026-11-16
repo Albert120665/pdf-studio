@@ -1,5 +1,5 @@
 // Service Worker: offline-fähig + Teilen-Ziel
-const VERSION = 'pdfstudio-v1.0.1';
+const VERSION = 'pdfstudio-v1.0.2';
 const CORE = [
   './', './index.html', './app.css', './app.js', './manifest.webmanifest',
   './vendor/pdfjs/pdf.min.mjs', './vendor/pdfjs/pdf.worker.min.mjs', './vendor/pdf-lib.esm.min.js',
@@ -7,7 +7,8 @@ const CORE = [
 ];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE)).then(() => self.skipWaiting()));
+  // cache: 'reload' umgeht den HTTP-Cache – sonst landen bei Updates alte Dateien im neuen Speicher
+  e.waitUntil(caches.open(VERSION).then((c) => c.addAll(CORE.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 
 self.addEventListener('activate', (e) => {
@@ -39,7 +40,7 @@ self.addEventListener('fetch', (e) => {
   e.respondWith((async () => {
     const cache = await caches.open(VERSION);
     const hit = await cache.match(e.request, { ignoreSearch: url.pathname.endsWith('/') || url.pathname.endsWith('index.html') });
-    const net = fetch(e.request).then((res) => { if (res.ok) cache.put(e.request, res.clone()); return res; }).catch(() => null);
+    const net = fetch(e.request.url, { cache: 'no-cache' }).then((res) => { if (res.ok) cache.put(e.request, res.clone()); return res; }).catch(() => null);
     return hit || (await net) || new Response('Offline', { status: 503 });
   })());
 });
