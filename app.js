@@ -4,7 +4,7 @@ import * as pdfjsLib from './vendor/pdfjs/pdf.min.mjs';
 import { PDFDocument, StandardFonts, rgb, degrees, BlendMode, LineCapStyle, PDFName, PDFBool,
          PDFTextField, PDFCheckBox, PDFRadioGroup, PDFDropdown, PDFOptionList } from './vendor/pdf-lib.esm.min.js';
 
-const VERSION = '1.0.0';
+const VERSION = '1.0.1';
 pdfjsLib.GlobalWorkerOptions.workerSrc = './vendor/pdfjs/pdf.worker.min.mjs';
 const abs = (p) => new URL(p, location.href).href;  // absolut, sonst löst der Worker relativ zu sich auf
 const DOC_OPTS = {
@@ -592,6 +592,8 @@ function setTool(t) {
     $('#widthRange').parentElement.style.display = t === 'text' ? 'none' : '';
     $('#widthRange').value = o.width;
     $('#widthRange').max = t === 'marker' ? 30 : 12;
+    // Zoom-Regler und Seitenzähler über die (ggf. zweizeilige) Farbauswahl schieben
+    document.documentElement.style.setProperty('--opts', $('#toolopts').offsetHeight + 'px');
   }
   const hints = { text: 'Auf die Stelle tippen, an der Text stehen soll', check: 'Tippen setzt einen Haken', cross: 'Tippen setzt ein Kreuz',
                   ink: 'Mit dem Finger oder Stift zeichnen', marker: 'Über den Text streichen', rect: 'Rahmen aufziehen', ellipse: 'Rahmen aufziehen',

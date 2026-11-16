@@ -132,10 +132,10 @@ body:not(.tool-view) .capture { display: block; cursor: crosshair; }
   border-radius: 22px; box-shadow: 0 2px 10px rgba(0,0,0,.2); display: flex; align-items: center; }
 #zoombox[hidden] { display: none; }
 #zoomFit { font-size: 13px; min-width: 48px; height: 42px; }
-body.opts #zoombox { bottom: calc(var(--bottom) + 76px); }
+body.opts #zoombox { bottom: calc(var(--bottom) + var(--opts, 60px) + 18px); }
 #pageIndicator { position: fixed; left: 10px; bottom: calc(var(--bottom) + 14px); z-index: 17; background: rgba(30,30,30,.75);
   color: #fff; font-size: 13px; padding: 5px 11px; border-radius: 14px; pointer-events: none; }
-body.opts #pageIndicator { bottom: calc(var(--bottom) + 80px); }
+body.opts #pageIndicator { bottom: calc(var(--bottom) + var(--opts, 60px) + 22px); }
 
 /* Schwebende Leisten */
 #selbar, #itembar { position: fixed; z-index: 25; background: #222; color: #fff; border-radius: 12px;

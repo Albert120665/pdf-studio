@@ -1,5 +1,5 @@
 // Service Worker: offline-fähig + Teilen-Ziel
-const VERSION = 'pdfstudio-v1.0.0';
+const VERSION = 'pdfstudio-v1.0.1';
 const CORE = [
   './', './index.html', './app.css', './app.js', './manifest.webmanifest',
   './vendor/pdfjs/pdf.min.mjs', './vendor/pdfjs/pdf.worker.min.mjs', './vendor/pdf-lib.esm.min.js',
